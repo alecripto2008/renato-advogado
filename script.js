@@ -166,5 +166,47 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.style.setProperty('--scroll-progress', `${scrollPercent}%`);
   }, { passive: true });
 
+  // ===== CAL.COM MODAL =====
+  // Torna as funções globais para uso nos onclick do HTML
+  window.openCalModal = function () {
+    const modal = document.getElementById('calModal');
+    const iframe = document.getElementById('calIframe');
+
+    // URL do Cal.com - SUBSTITUA pelo link do advogado quando disponível
+    const calUrl = 'https://cal.com/helvecio-bello-siaxwl/30min?overlayCalendar=true';
+
+    // Carrega o iframe apenas quando abre (lazy loading)
+    if (!iframe.src || iframe.src === '' || iframe.src === window.location.href) {
+      iframe.src = calUrl;
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Analytics event
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'calendar_open',
+        cta_name: 'cal_modal_open'
+      });
+    }
+  };
+
+  window.closeCalModal = function () {
+    const modal = document.getElementById('calModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // Fechar modal com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('calModal');
+      if (modal && modal.classList.contains('active')) {
+        window.closeCalModal();
+      }
+    }
+  });
+
   console.log('✅ Renato Lobo – Landing Page loaded successfully');
 });
