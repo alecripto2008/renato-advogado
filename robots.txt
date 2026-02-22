@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://renato-advogado.vercel.app/sitemap.xml
